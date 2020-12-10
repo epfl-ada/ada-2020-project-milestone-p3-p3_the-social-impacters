@@ -36,6 +36,7 @@ Columns 2 to 4 show the accuracy of each classifier.
 Columns 5 to 7 show the F1-score of each classifier.
 The 3 right-most columns represent the feature importance associated to the feature mentioned in the first column for each classifier.
 
+%% In datastory, display file: figures/classifiers_performances_table.html
 | variable         |   accuracy, logistic_regression |   accuracy, random_forest |   accuracy, xgboost |   f1, logistic_regression |   f1, random_forest |   f1, xgboost |   importance_score, logistic_regression |   importance_score, random_forest |   importance_score, xgboost |
 |:-----------------|--------------------------------------:|--------------------------------:|--------------------------:|--------------------------------:|--------------------------:|--------------------:|----------------------------------------------:|----------------------------------------:|----------------------------------:|
 | S_cementfloorbat |                              0.816697 |                        0.998185 |                  0.99637  |                        0.818018 |                  0.998205 |            0.996403 |                                      1.05474  |                             0.000634676 |                       0.00144596  |
@@ -61,6 +62,7 @@ Let's look at the distribution of the features that are considered the most impo
 
 Here are the features ranked as most important for each classifier:
 
+%% In datastory, display file: figures/coef_and_importance_comparison_table.html
 |    | model               | feature      |   feature_importance | model         | feature           |   feature_importance | model   | feature           |   feature_importance |
 |---:|:--------------------|:-------------|---------------------:|:--------------|:------------------|---------------------:|:--------|:------------------|---------------------:|
 |  0 | logistic_regression | C_people     |             11.145   | random_forest | C_blocksdirtfloor |            0.0686068 | xgboost | C_poverty         |            0.12123   |
@@ -76,6 +78,7 @@ Note that the feature importance scores from the logistic regression are calcula
 
 Let's look at the distribution of all the most important features reported in the above table.
 
+%% In datastory, display file: figures/distribution_of_most_important_features_task_A
 ![distribution_of_most_important_features_task_A.png](./figures/distribution_of_most_important_features_task_A.png)
 
 We see that the distribution for the treatment and control groups are indeed relatively different for these features.
@@ -96,6 +99,7 @@ Features rankings.
 The left-most column shows the features ranked by their paper's coefficients. The second column shows the value of the coefficient.
 The two right-most columns show the features ranked by their feature importance scores that we computed above, and the value of the scores.
 
+%% In datastory, display file: figures/coef_and_importance_comparison_barplot.html
 |    | paper_ranking    |   paper_importance_score | lr_ranking       |   lr_importance_score |
 |---:|:-----------------|-------------------------:|:-----------------|----------------------:|
 |  0 | S_cesds          |                   -2.315 | S_cesds          |             -0.350066 |
