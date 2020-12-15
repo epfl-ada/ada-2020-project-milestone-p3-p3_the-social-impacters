@@ -3,22 +3,22 @@
 Our task A consists in two main goals:
 1. Compare the predictive performances of the different _outcome variables_ specified in Tables 4 and 6 of the paper to predict whether a household is from the treatment of control group.
 
-To achieve this, we first build a baseline model that only includes control variables, i.e. features from the 2000 census, and features from the 2005 survey that are used either in their regression model 3 or as robustness checks in Table 7 of the paper.
+To achieve this, we first build a baseline model that only includes control variables, i.e. features from the 2000 census, and features from the 2005 survey that are used either in their regression model 3 or as robustness checks in Table 7 of the paper. 
 50 such features were selected.
 The task consists in predicting whether an household is from the treatment or control group based on these features. The target feature is therefore the _intention-to-treat_ feature, referred as `dpisofirme` throughout the code.
 
-Our expectation is that the baseline model should not perform well because the authors provided ample evidences that treatment and control households are well balanced over these control variables. As we will see, our models could actually exploit .. and perform very well on this baseline case.
+Our expectation is that the baseline model should not perform well because the authors provided ample evidences that treatment and control households are well balanced over these control variables. As we will see, our models could actually exploit the differences in these control variables and perform very well on this baseline case.
 
-Then we construct a model for each _outcome variable_, which includes the outcome variable besides the control variables.
-In the paper, the intention-to-treat variable is shown to be important to predict the outcome variables, hence we expect that including them in the model improves our predictions of the intention-to-treat variable.
+Then we construct a model for each _outcome variable_, i.e. a model that includes the outcome variable as covariate besides the control variables. 
+In the paper, the intention-to-treat variable is shown to be important to predict the outcome variables, hence we expect that including an outcome variable in the model should improve our predictions of the intention-to-treat variable. 
 As you will see, we could not observe such an effect because the baseline predictions were already perfect.
 
 2. Compare the feature importances of the _outcome variables_ with the regression coefficients from the paper
 
 To achieve this, we perform a feature importance analysis on the models explained above and obtain an importance score for each outcome variable.
-Then we compare first qualitatively the importance ranking of the outcome variables using our importance scores with the one using the paper's regression coefficients.
+Then we compare first qualitatively the importance ranking of the outcome variables using our importance scores with the ranking based on the paper's regression coefficients.
 It turns out that they agree relatively well.
-We then compare them quantitatively and it turns out that they agree pretty well too.
+We then compare them quantitatively and they agree pretty well too.
 
 Reference to the [paper](https://www.aeaweb.org/articles?id=10.1257/pol.1.1.75):
 
@@ -30,7 +30,7 @@ Matias D. Cattaneo, Sebastian Galiani, Paul J. Gertler, Sebastian Martinez, and 
 **Table caption**:
 
 Prediction performances on the test set.
-The left-most column represents the feature that is included as covariate, besides the control variables.
+The left-most column represents the outcome variable that is included as covariate, besides the control variables. 
 The _baseline_ variable means that only the control variables are included.
 Columns 2 to 4 show the accuracy of each classifier.
 Columns 5 to 7 show the F1-score of each classifier.
@@ -56,7 +56,7 @@ Impressively, the baseline models, i.e. the models that only uses the control va
 We did not expect this since the authors provide evidence that households selected in the treatment and control groups are similar in all control variables.
 
 We notice that the results of logistic regressions are not bad as well (all models have an accuracy above 0.8) considering that chance accuracy is 0.51.
-The fact that the logistic regression classifier still performs poorly compared to the random forest and XGBoost classifiers suggests that the relationship between the variables and the treatment/control target is substantially non-linear.
+The fact that the logistic regression classifier still performs poorly compared to the random forest and XGBoost classifiers suggests that the relationship between the variables and the log odds of the treatment/control target is substantially non-linear.
 
 Let's look at the distribution of the features that are considered the most important according to our classifiers.
 
@@ -71,7 +71,6 @@ Here are the features ranked as most important for each classifier:
 |  3 | logistic_regression | C_HHpersons  |             -3.93245 | random_forest | C_households      |            0.0597152 | xgboost | C_blocksdirtfloor |            0.0886493 |
 |  4 | logistic_regression | C_households |             -9.76182 | random_forest | C_washing         |            0.0586357 | xgboost | C_dropouts515     |            0.0816101 |
 
-
 We note that several features are considered important by several classifiers, such as `C_households`, `C_blocksdirtfloor`, `C_waterbath`.
 
 Note that the feature importance scores from the logistic regression are calculated differently from the ones of the random forest and XGBoost classifiers and their values cannot be compared. We only look at the relative rankings of the features here.
@@ -82,7 +81,7 @@ Let's look at the distribution of all the most important features reported in th
 ![distribution_of_most_important_features_task_A.png](./figures/distribution_of_most_important_features_task_A.png)
 
 We see that the distribution for the treatment and control groups are indeed relatively different for these features.
-It is remarkable that our classifiers are able to take advantage of this to such an extent as to perfectly predict the treatment/control labels on a held-out test set.
+It is remarkable that our classifiers are able to take advantage of these differences to such an extent as to perfectly predict the treatment/control labels on a held-out test set.
 
 ## Comparison of our feature importances with their _intention-to-treatment_ coefficients
 
@@ -91,7 +90,6 @@ We now compare the feature importances of the outcome variables obtained in the 
 We expect that our feature importances should loosely agree with their coefficients, meaning that the extent to which the _intention-to-treat_ variable is linearly related to a variable is proportional to the importance of this variable to predict the _intention-to-treat_ variable.
 
 We will use the feature importances from the logistic regression because they range over positive as well as negative values, contrarily to the feature importance scores from random forest and XGBoost classifiers.
-
 
 **Table caption:**
 
@@ -115,7 +113,7 @@ The two right-most columns show the features ranked by their feature importance 
 
 We first notice that the ranking of importances is almost the same in the paper and in our task:
 
-In the following bullet points, the first rank mentioned corresponds to the paper's, and the second corresponds to our task's:
+The only differences are stated in the 3 following bullet points, in which the first rank mentioned corresponds to the paper's, and the second corresponds to our task's:
 - `S_satislife` is ranked 4 instead of 3
 - `S_shcementfloor` is ranked 5 instead of 6
 - `S_satisfloor` is ranked 7 instead of 4
@@ -123,7 +121,6 @@ In the following bullet points, the first rank mentioned corresponds to the pape
 We also note that the sign of the coefficients agree with the sign of the feature importance scores.
 
 We conclude that our feature importance scores agree qualitatively with the coefficients from the paper's regressions.
-
 
 Here we show the paper's coefficients transformed in the range \[0, 1\], along with the importance scores that we obtained for the same features and transformed in the same way.
 
@@ -135,4 +132,4 @@ Here we show the paper's coefficients transformed in the range \[0, 1\], along w
 - The feature for which the two scores differ the most (on a relative scale) is `S_pss`, which represents the perceived stress of the mother of the households.
 
 We conclude that our feature importance scores agree to some extent quantitatively with the paper coefficients. 
-But we advise not to rely too much on them, and rather only use the qualitative information of the ranking, which seems more robust.
+But we advise not to rely too much on them, and rather only use the qualitative information of the ranking, which is probably more robust.
