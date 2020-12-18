@@ -28,7 +28,7 @@ We already have the necessary datasets, as we are only using the datasets from t
 We expect our feature importances to be relatively proportional to the effects found in the regression analysis of the paper.
 
 - __Task B__: 
-    Build regressors using OLS, Random Forest Regressor, Lasso Regression, Ridge Regression, and Multi-Layer Perceptron algorithms. For features, use only features from 2000 Census data. For outcomes, use the outcomes in Table 6. Among the features found in the `households.dta` file, the features in Table 6 are the features most generalizeable to other areas of public policy, and also the features which are the least likely to be collected in a standard census. Finally, compare the predictions based on the Mean Squared Error (MSE).
+    Build regressors using OLS, Random Forest Regressor, Ridge Regression, and Multi-Layer Perceptron algorithms. For features, use only features from 2000 Census data. For outcomes, use the outcomes in Table 6. Among the features found in the `households.dta` file, the features in Table 6 are the features most generalizeable to other areas of public policy, and also the features which are the least likely to be collected in a standard census. Finally, compare the predictions based on the Mean Squared Error (MSE).
 
 ## Visualizations
 1. The first visualization will show the treatment and control households on a geographical map. This will give a sense of the proximity between the treatment and control groups. (This is not directly related to our research questions, but will be useful for the data story). 
